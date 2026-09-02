@@ -122,7 +122,7 @@
             background: #f8f9fa;
             border-radius: 8px;
             padding: 12px;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             text-align: left;
             font-size: 0.9rem;
         }
@@ -251,6 +251,14 @@
             <p><strong>Arrecadado:</strong> R$ <span id="totalMoney">0,00</span></p>
         </div>
 
+        <div class="admin-dashboard">
+            <label style="font-weight: bold; display: block; margin-bottom: 6px;">Adicionar/Alterar Total de Números:</label>
+            <div style="display: flex; gap: 8px;">
+                <input type="number" id="inputTotalNumbers" class="input-field" style="margin: 0; max-width: 140px;" min="1" value="15">
+                <button class="btn-action" style="margin: 0; width: auto; padding: 0 16px; font-size: 0.85rem;" onclick="saveTotalNumbers()">Atualizar Números</button>
+            </div>
+        </div>
+
         <div class="grid" id="adminGrid"></div>
 
         <button class="btn-reset" onclick="resetRaffle()">Zerar Toda a Rifa</button>
@@ -311,7 +319,6 @@
         let tickets = Array(totalNumbers).fill(false);
         let currentUser = null;
 
-        // Monitorar estado de autenticação
         onAuthStateChanged(auth, (user) => {
             currentUser = user;
             if (user && document.getElementById('adminView').classList.contains('active')) {
@@ -319,20 +326,21 @@
             }
         });
 
-        // Carregar configurações dinâmicas do banco
+        // Buscar configurações em tempo real
         onValue(configRef, (snapshot) => {
             const data = snapshot.val();
             if (data) {
-                ticketPrice = data.preco || 15;
+                ticketPrice = data.preco !== undefined ? data.preco : 15;
                 totalNumbers = data.total_numeros || 15;
             } else {
                 set(configRef, { preco: 15, total_numeros: 15 });
             }
             document.querySelectorAll('.ticket-price-display').forEach(el => el.innerText = ticketPrice.toFixed(2).replace('.', ','));
             document.getElementById('totalNumbersDisplay').innerText = totalNumbers;
+            document.getElementById('inputTotalNumbers').value = totalNumbers;
         });
 
-        // Monitorar os bilhetes em tempo real
+        // Buscar bilhetes em tempo real
         onValue(raffleRef, (snapshot) => {
             const data = snapshot.val();
             if (data && Array.isArray(data)) {
@@ -359,7 +367,7 @@
 
                 if (isSold) soldCount++;
 
-                // Grid do Cliente
+                // Grid Cliente
                 const clientBtn = document.createElement('button');
                 clientBtn.className = `number-btn ${isSold ? 'sold' : ''}`;
                 clientBtn.innerText = numFormatted;
@@ -367,7 +375,7 @@
                 if (!isSold) clientBtn.onclick = () => openPixModal(i + 1);
                 clientGrid.appendChild(clientBtn);
 
-                // Grid do Admin
+                // Grid Admin
                 const adminBtn = document.createElement('button');
                 adminBtn.className = `admin-btn ${isSold ? 'bought' : 'available'}`;
                 adminBtn.innerHTML = `${numFormatted} <span>${isSold ? 'Pago' : 'Livre'}</span>`;
@@ -382,6 +390,32 @@
         function toggleTicketStatus(index) {
             tickets[index] = !tickets[index];
             set(raffleRef, tickets);
+        }
+
+        function saveTotalNumbers() {
+            const newTotal = parseInt(document.getElementById('inputTotalNumbers').value, 10);
+            if (isNaN(newTotal) || newTotal < 1) {
+                alert('Por favor, informe uma quantidade válida.');
+                return;
+            }
+
+            let newTickets = [...tickets];
+
+            if (newTotal > newTickets.length) {
+                while (newTickets.length < newTotal) {
+                    newTickets.push(false);
+                }
+            } else if (newTotal < newTickets.length) {
+                if (!confirm("Diminuir o número de rifas pode apagar o status de números já existentes no final da lista. Deseja continuar?")) {
+                    document.getElementById('inputTotalNumbers').value = totalNumbers;
+                    return;
+                }
+                newTickets = newTickets.slice(0, newTotal);
+            }
+
+            set(configRef, { preco: ticketPrice, total_numeros: newTotal });
+            set(raffleRef, newTickets);
+            alert('Quantidade total de números atualizada!');
         }
 
         function resetRaffle() {
@@ -447,7 +481,6 @@
             alert('Chave PIX copiada! Envie o comprovante para a dona da rifa.');
         }
 
-        // Tornar funções globais para escopo dos eventos HTML
         window.switchView = switchView;
         window.requestAdminAccess = requestAdminAccess;
         window.loginAdmin = loginAdmin;
@@ -456,6 +489,7 @@
         window.openPixModal = openPixModal;
         window.closeModal = closeModal;
         window.copyPixCode = copyPixCode;
+        window.saveTotalNumbers = saveTotalNumbers;
     </script>
 </body>
 </html>

@@ -69,25 +69,11 @@
             text-align: center;
         }
 
-        .view-section {
-            display: none;
-        }
+        .view-section { display: none; }
+        .view-section.active { display: block; }
 
-        .view-section.active {
-            display: block;
-        }
-
-        .header h1 {
-            color: var(--accent);
-            font-size: 1.6rem;
-            margin-bottom: 8px;
-        }
-
-        .header p {
-            font-size: 0.95rem;
-            color: #636e72;
-            margin-bottom: 16px;
-        }
+        .header h1 { color: var(--accent); font-size: 1.6rem; margin-bottom: 8px; }
+        .header p { font-size: 0.95rem; color: #636e72; margin-bottom: 16px; }
 
         .prize-info {
             background-color: #fd79a815;
@@ -97,10 +83,7 @@
             margin-bottom: 24px;
         }
 
-        .prize-info strong {
-            color: var(--accent);
-            font-size: 1.1rem;
-        }
+        .prize-info strong { color: var(--accent); font-size: 1.1rem; }
 
         .grid {
             display: grid;
@@ -158,30 +141,13 @@
             gap: 2px;
         }
 
-        .admin-btn.available {
-            background-color: #e8f8f5;
-            border-color: var(--success);
-            color: var(--success);
-        }
+        .admin-btn.available { background-color: #e8f8f5; border-color: var(--success); color: var(--success); }
+        .admin-btn.bought { background-color: #ffeaa7; border-color: #fdcb6e; color: #d63031; }
+        .admin-btn span { font-size: 0.65rem; text-transform: uppercase; }
 
-        .admin-btn.bought {
-            background-color: #ffeaa7;
-            border-color: #fdcb6e;
-            color: #d63031;
-        }
-
-        .admin-btn span {
-            font-size: 0.65rem;
-            text-transform: uppercase;
-        }
-
-        /* Modais */
         .modal-overlay {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0; width: 100%; height: 100%;
             background-color: rgba(0, 0, 0, 0.5);
             display: none;
             justify-content: center;
@@ -190,9 +156,7 @@
             z-index: 100;
         }
 
-        .modal-overlay.active {
-            display: flex;
-        }
+        .modal-overlay.active { display: flex; }
 
         .modal {
             background-color: var(--card-bg);
@@ -211,28 +175,18 @@
         }
 
         .close-btn {
-            position: absolute;
-            top: 12px;
-            right: 16px;
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: #b2bec3;
+            position: absolute; top: 12px; right: 16px;
+            background: none; border: none; font-size: 1.5rem;
+            cursor: pointer; color: #b2bec3;
         }
 
         .qr-placeholder {
-            width: 160px;
-            height: 160px;
+            width: 160px; height: 160px;
             background-color: #f1f2f6;
             margin: 16px auto;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 8px;
-            border: 2px dashed #b2bec3;
-            color: #74b9ff;
-            font-weight: bold;
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 8px; border: 2px dashed #b2bec3;
+            color: #74b9ff; font-weight: bold;
         }
 
         .pix-code {
@@ -247,52 +201,31 @@
 
         .btn-action {
             background-color: var(--accent);
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 8px;
-            font-weight: bold;
-            cursor: pointer;
-            width: 100%;
-            transition: background 0.2s;
+            color: white; border: none; padding: 12px 20px;
+            border-radius: 8px; font-weight: bold; cursor: pointer;
+            width: 100%; transition: background 0.2s; margin-top: 8px;
         }
 
-        .btn-action:hover {
-            background-color: var(--primary);
-        }
-
+        .btn-action:hover { background-color: var(--primary); }
         .btn-reset {
-            background: none;
-            border: 1px solid var(--primary);
-            color: var(--primary);
-            padding: 8px;
-            border-radius: 6px;
-            font-size: 0.8rem;
-            cursor: pointer;
-            margin-top: 10px;
-            width: 100%;
+            background: none; border: 1px solid var(--primary);
+            color: var(--primary); padding: 8px; border-radius: 6px;
+            font-size: 0.8rem; cursor: pointer; margin-top: 10px; width: 100%;
         }
 
         .input-field {
-            width: 100%;
-            padding: 10px;
-            margin: 15px 0;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            font-size: 1rem;
-            text-align: center;
+            width: 100%; padding: 10px; margin: 8px 0;
+            border: 1px solid #ccc; border-radius: 8px; font-size: 0.95rem;
         }
     </style>
 </head>
 <body>
 
-    <!-- Navegação -->
     <div class="nav-bar">
         <button class="nav-btn active" id="btnNavClient" onclick="switchView('client')">Visão Cliente</button>
         <button class="nav-btn" id="btnNavAdmin" onclick="requestAdminAccess()">Painel Admin 🔒</button>
     </div>
 
-    <!-- TELA DO CLIENTE -->
     <div class="container view-section active" id="clientView">
         <div class="header">
             <h1>Rifa de Nail Art 💅</h1>
@@ -301,13 +234,12 @@
 
         <div class="prize-info">
             <p>Prêmio: <strong>Alongamento em Gel Completo</strong></p>
-            <p><small>Valor da cota: <strong>R$ 15,00</strong></small></p>
+            <p><small>Valor da cota: <strong>R$ <span class="ticket-price-display">10,00</span></strong></small></p>
         </div>
 
         <div class="grid" id="clientGrid"></div>
     </div>
 
-    <!-- TELA DA ADMINISTRADORA -->
     <div class="container view-section" id="adminView">
         <div class="header">
             <h1>Gerenciador da Rifa ⚙️</h1>
@@ -315,49 +247,50 @@
         </div>
 
         <div class="admin-dashboard">
-            <p><strong>Vendidos:</strong> <span id="soldCount">0</span>/15</p>
+            <p><strong>Vendidos:</strong> <span id="soldCount">0</span>/<span id="totalNumbersDisplay">15</span></p>
             <p><strong>Arrecadado:</strong> R$ <span id="totalMoney">0,00</span></p>
         </div>
 
         <div class="grid" id="adminGrid"></div>
 
         <button class="btn-reset" onclick="resetRaffle()">Zerar Toda a Rifa</button>
+        <button class="btn-reset" style="border-color: #636e72; color: #636e72; margin-top: 5px;" onclick="logoutAdmin()">Sair da Conta Admin</button>
     </div>
 
-    <!-- MODAL PIX (CLIENTE) -->
     <div class="modal-overlay" id="pixModal">
         <div class="modal">
             <button class="close-btn" onclick="closeModal('pixModal')">&times;</button>
             <h2>Pagamento via PIX</h2>
             <p>Você selecionou o número: <strong id="selectedNum" style="color: var(--accent);">--</strong></p>
-            <p><small>Total: <strong>R$ 15,00</strong></small></p>
+            <p><small>Total: <strong>R$ <span class="ticket-price-display">10,00</span></strong></small></p>
+
+            <div class="qr-placeholder">[ QR CODE PIX ]</div>
 
             <div class="pix-code" id="pixKey">
-                41995523499
+                00020126360014BR.GOV.BCB.PIX0114seu-email-aqui@dominio.com520400005303986540510.005802BR5915Sua Esmalteria6009SUA CIDADE62070503***6304E2CA
             </div>
 
             <button class="btn-action" onclick="copyPixCode()">Copiar Chave PIX</button>
         </div>
     </div>
 
-    <!-- MODAL SENHA ADMIN -->
     <div class="modal-overlay" id="authModal">
         <div class="modal">
             <button class="close-btn" onclick="closeModal('authModal')">&times;</button>
-            <h2>Acesso Restrito 🔒</h2>
-            <p><small>Digite a senha de administradora para continuar:</small></p>
+            <h2>Login da Administradora 🔒</h2>
+            <p><small>Digite as credenciais cadastradas no Firebase:</small></p>
             
-            <input type="password" id="adminPasswordInput" class="input-field" placeholder="Digite a senha">
-            <button class="btn-action" onclick="validatePassword()">Entrar</button>
+            <input type="email" id="adminEmail" class="input-field" placeholder="E-mail de admin">
+            <input type="password" id="adminPassword" class="input-field" placeholder="Senha">
+            <button class="btn-action" onclick="loginAdmin()">Entrar</button>
         </div>
     </div>
 
-    <!-- Firebase Script (Versão Modular ES6) -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getDatabase, ref, onValue, set } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+        import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-        // Configuração do seu Projeto Firebase
         const firebaseConfig = {
             apiKey: "AIzaSyCfJX5XXi4AjLDvPBIL-ftp7t8kemrqcO8",
             authDomain: "dhienifer-8979c.firebaseapp.com",
@@ -368,25 +301,47 @@
             measurementId: "G-KCP1EZ1H70"
         };
 
-        const ADMIN_PASSWORD = "121929"; // Altere sua senha aqui
-        const TICKET_PRICE = 15;
-        const TOTAL_NUMBERS = 15;
-        let isAdminLoggedIn = false;
-
-        // Inicializar Firebase e Realtime Database
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
+        const auth = getAuth(app);
+
         const raffleRef = ref(db, 'rifa_tickets');
+        const configRef = ref(db, 'config');
 
-        let tickets = Array(TOTAL_NUMBERS).fill(false);
+        let ticketPrice = 10;
+        let totalNumbers = 15;
+        let tickets = Array(totalNumbers).fill(false);
+        let currentUser = null;
 
-        // Atualização em Tempo Real via Firebase
-        onValue(raffleRef, (snapshot) => {
+        // Monitorar estado de autenticação
+        onAuthStateChanged(auth, (user) => {
+            currentUser = user;
+            if (user && document.getElementById('adminView').classList.contains('active')) {
+                renderGrids();
+            }
+        });
+
+        // Carregar configurações dinâmicas do banco
+        onValue(configRef, (snapshot) => {
             const data = snapshot.val();
             if (data) {
+                ticketPrice = data.preco || 10;
+                totalNumbers = data.total_numeros || 15;
+            } else {
+                set(configRef, { preco: 10, total_numeros: 15 });
+            }
+            document.querySelectorAll('.ticket-price-display').forEach(el => el.innerText = ticketPrice.toFixed(2).replace('.', ','));
+            document.getElementById('totalNumbersDisplay').innerText = totalNumbers;
+        });
+
+        // Monitorar os bilhetes em tempo real
+        onValue(raffleRef, (snapshot) => {
+            const data = snapshot.val();
+            if (data && Array.isArray(data)) {
                 tickets = data;
             } else {
-                set(raffleRef, Array(TOTAL_NUMBERS).fill(false));
+                tickets = Array(totalNumbers).fill(false);
+                set(raffleRef, tickets);
             }
             renderGrids();
         });
@@ -400,23 +355,21 @@
 
             let soldCount = 0;
 
-            for (let i = 0; i < TOTAL_NUMBERS; i++) {
+            for (let i = 0; i < totalNumbers; i++) {
                 const numFormatted = String(i + 1).padStart(2, '0');
-                const isSold = tickets[i];
+                const isSold = tickets[i] || false;
 
                 if (isSold) soldCount++;
 
-                // Botão Cliente
+                // Grid do Cliente
                 const clientBtn = document.createElement('button');
                 clientBtn.className = `number-btn ${isSold ? 'sold' : ''}`;
                 clientBtn.innerText = numFormatted;
                 clientBtn.disabled = isSold;
-                if (!isSold) {
-                    clientBtn.onclick = () => openPixModal(i + 1);
-                }
+                if (!isSold) clientBtn.onclick = () => openPixModal(i + 1);
                 clientGrid.appendChild(clientBtn);
 
-                // Botão Admin
+                // Grid do Admin
                 const adminBtn = document.createElement('button');
                 adminBtn.className = `admin-btn ${isSold ? 'bought' : 'available'}`;
                 adminBtn.innerHTML = `${numFormatted} <span>${isSold ? 'Pago' : 'Livre'}</span>`;
@@ -425,7 +378,7 @@
             }
 
             document.getElementById('soldCount').innerText = soldCount;
-            document.getElementById('totalMoney').innerText = (soldCount * TICKET_PRICE).toFixed(2).replace('.', ',');
+            document.getElementById('totalMoney').innerText = (soldCount * ticketPrice).toFixed(2).replace('.', ',');
         }
 
         function toggleTicketStatus(index) {
@@ -435,28 +388,37 @@
 
         function resetRaffle() {
             if (confirm("Tem certeza que deseja zerar a rifa e liberar todos os números?")) {
-                set(raffleRef, Array(TOTAL_NUMBERS).fill(false));
+                set(raffleRef, Array(totalNumbers).fill(false));
             }
         }
 
         function requestAdminAccess() {
-            if (isAdminLoggedIn) {
+            if (currentUser) {
                 switchView('admin');
             } else {
                 document.getElementById('authModal').classList.add('active');
             }
         }
 
-        function validatePassword() {
-            const input = document.getElementById('adminPasswordInput').value;
-            if (input === ADMIN_PASSWORD) {
-                isAdminLoggedIn = true;
+        async function loginAdmin() {
+            const email = document.getElementById('adminEmail').value;
+            const pass = document.getElementById('adminPassword').value;
+
+            try {
+                await signInWithEmailAndPassword(auth, email, pass);
                 closeModal('authModal');
-                document.getElementById('adminPasswordInput').value = '';
+                document.getElementById('adminEmail').value = '';
+                document.getElementById('adminPassword').value = '';
                 switchView('admin');
-            } else {
-                alert('Senha incorreta!');
+            } catch (error) {
+                alert('Erro ao realizar login: E-mail ou senha inválidos.');
             }
+        }
+
+        async function logoutAdmin() {
+            await signOut(auth);
+            switchView('client');
+            alert('Você saiu do painel de administração.');
         }
 
         function switchView(view) {
@@ -487,10 +449,11 @@
             alert('Chave PIX copiada! Envie o comprovante para a dona da rifa.');
         }
 
-        // Torna as funções acessíveis ao HTML inline
+        // Tornar funções globais para escopo dos eventos HTML
         window.switchView = switchView;
         window.requestAdminAccess = requestAdminAccess;
-        window.validatePassword = validatePassword;
+        window.loginAdmin = loginAdmin;
+        window.logoutAdmin = logoutAdmin;
         window.resetRaffle = resetRaffle;
         window.openPixModal = openPixModal;
         window.closeModal = closeModal;
